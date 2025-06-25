@@ -8,6 +8,7 @@ on:
 
 jobs:
   integration:
+    environment: integration
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -28,12 +29,14 @@ jobs:
       - run: echo "- Simulate and test the artifact"
 
   development:
+    environment: development
     needs: [build]
     runs-on: ubuntu-latest
     steps:
       - run: echo "- Auto-deploy the artifact to the development environment"
         
   staging:
+    environment: staging
     needs: [test-artifact, build]
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +52,7 @@ jobs:
       - run: echo "- Test the staging environment"
         
   production:
+    environment: production
     needs: [staging,test-staging]
     runs-on: ubuntu-latest
     steps:
